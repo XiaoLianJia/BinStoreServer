@@ -1,13 +1,11 @@
 package com.bincontrol.binstoreserver.service;
 
 import com.bincontrol.binstoreserver.entity.Commodity;
-import com.bincontrol.binstoreserver.repository.CommodityRepository;
 import com.taobao.api.ApiException;
 import com.taobao.api.DefaultTaobaoClient;
 import com.taobao.api.TaobaoClient;
 import com.taobao.api.request.TbkDgItemCouponGetRequest;
 import com.taobao.api.response.TbkDgItemCouponGetResponse;
-import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -22,7 +20,7 @@ import static com.bincontrol.binstoreserver.common.ServerConstant.*;
 public class CommodityRequestService {
 
     @Autowired
-    private CommodityRepository commodityRepository;
+    private CommodityService commodityService;
     private TaobaoClient mClient;
     private TbkDgItemCouponGetRequest mRequest;
 
@@ -55,21 +53,22 @@ public class CommodityRequestService {
             for (TbkDgItemCouponGetResponse.TbkCoupon tbkCoupon : tbkCouponList) {
 
                 Commodity commodity = new Commodity();
-                commodity.setNumIid(tbkCoupon.getNumIid());
+                commodity.setCommodityId(tbkCoupon.getNumIid());
                 commodity.setPicture(tbkCoupon.getPictUrl());
                 commodity.setTitle(tbkCoupon.getTitle());
                 commodity.setPrice(tbkCoupon.getZkFinalPrice());
                 commodity.setCategory(category);
                 commodity.setUpdateTime(new Date());
-                commodityRepository.save(commodity);
+                commodityService.delete(commodity.getCommodityId());
+                commodityService.save(commodity);
             }
 
-            String log = "请求（" + category +"）商品成功";
+            String log = "请求（" + category +"）商品成功\r\n";
             System.out.print(log);
 
         } catch (ApiException e) {
 
-            String log ="请求（" + category +"）商品失败，异常信息[" + e.getErrCode() + "]：" + e.getErrMsg();
+            String log ="请求（" + category +"）商品失败，异常信息[" + e.getErrCode() + "]：" + e.getErrMsg() + "\r\n";
             System.out.print(log);
         }
     }

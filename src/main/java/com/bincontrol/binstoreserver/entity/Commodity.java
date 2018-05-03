@@ -1,23 +1,39 @@
 package com.bincontrol.binstoreserver.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
+@Table(name = "tb_commodity")
 public class Commodity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    private Long numIid;
+
+    @NotNull
+    @Column(name = "commodity_id")
+    private Long commodityId;
+
+    @NotNull
+    @Column(name = "picture")
     private String picture;
+
+    @NotNull
+    @Column(name = "title")
     private String title;
+
+    @NotNull
+    @Column(name = "price")
     private String price;
+
+    @Column(name = "category")
     private String category;
+
+    @Column(name = "update_time")
     private Date updateTime;
+
 
     public Integer getId() {
         return id;
@@ -27,12 +43,12 @@ public class Commodity {
         this.id = id;
     }
 
-    public Long getNumIid() {
-        return numIid;
+    public Long getCommodityId() {
+        return commodityId;
     }
 
-    public void setNumIid(Long numIid) {
-        this.numIid = numIid;
+    public void setCommodityId(Long commodityId) {
+        this.commodityId = commodityId;
     }
 
     public String getPicture() {

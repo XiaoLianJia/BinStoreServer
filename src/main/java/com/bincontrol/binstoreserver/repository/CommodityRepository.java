@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CommodityRepository extends CrudRepository<Commodity, Long> {
+
+    Commodity findByCommodityId(Long commodityId);
+    void deleteByCommodityId(Long commodityId);
 }
