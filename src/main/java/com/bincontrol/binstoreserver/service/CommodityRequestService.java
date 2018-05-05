@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -24,7 +26,7 @@ public class CommodityRequestService {
     private TaobaoClient mClient;
     private TbkDgItemCouponGetRequest mRequest;
 
-    @Scheduled(cron = "0 0/1 * * * ?")
+    @Scheduled(cron = "0 0/2 * * * ?")
     public void getCommodity() {
 
         mClient = new DefaultTaobaoClient(ALI_SERVER_URL, ALI_SERVER_APP_KEY, ALI_SERVER_APP_SECRET);
@@ -32,6 +34,7 @@ public class CommodityRequestService {
         mRequest.setAdzoneId(ALI_SERVER_ADZONE_ID);
         mRequest.setPageSize(100L);
 
+        System.out.print("===================================================\r\n");
         String log ="请求商品数据开始：" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss\r\n").format(new Date());
         System.out.print(log);
 
@@ -41,6 +44,7 @@ public class CommodityRequestService {
 
         log ="请求商品数据完成：" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss\r\n").format(new Date());
         System.out.print(log);
+        System.out.print("===================================================\r\n");
     }
 
 
@@ -59,8 +63,7 @@ public class CommodityRequestService {
                 commodity.setPrice(tbkCoupon.getZkFinalPrice());
                 commodity.setCategory(category);
                 commodity.setUpdateTime(new Date());
-                commodityService.delete(commodity.getCommodityId());
-                commodityService.save(commodity);
+                commodityService.update(commodity);
             }
 
             String log = "请求（" + category +"）商品成功\r\n";
@@ -70,7 +73,24 @@ public class CommodityRequestService {
 
             String log ="请求（" + category +"）商品失败，异常信息[" + e.getErrCode() + "]：" + e.getErrMsg() + "\r\n";
             System.out.print(log);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+    }
+
+
+    @Scheduled(cron = "0 0/5 * * * ?")
+    public void cleanCommodity() {
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.HOUR_OF_DAY, -1);
+        Date date = calendar.getTime();
+        commodityService.deleteAll(date);
+
+        System.out.print("===================================================\r\n");
+        String log ="清理[" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date) + "]之前入库商品数据\r\n";
+        System.out.print(log);
+        System.out.print("===================================================\r\n");
     }
 
 }

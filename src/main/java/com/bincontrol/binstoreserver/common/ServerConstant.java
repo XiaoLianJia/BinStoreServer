@@ -16,7 +16,13 @@ public class ServerConstant {
         {
             add("女装");
             add("母婴");
+            add("美妆");
+            add("家居");
+            add("内衣");
+            add("男装");
+            add("美食");
             add("数码");
+            add("鞋包");
         }
     };
 
