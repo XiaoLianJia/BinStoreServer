@@ -1,6 +1,6 @@
 package com.bincontrol.binstoreserver.service;
 
-import com.bincontrol.binstoreserver.entity.Commodity;
+import com.bincontrol.binstoreserver.entity.CommodityEntity;
 import com.taobao.api.ApiException;
 import com.taobao.api.DefaultTaobaoClient;
 import com.taobao.api.TaobaoClient;
@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -56,14 +55,14 @@ public class CommodityRequestService {
             List<TbkDgItemCouponGetResponse.TbkCoupon> tbkCouponList = response.getResults();
             for (TbkDgItemCouponGetResponse.TbkCoupon tbkCoupon : tbkCouponList) {
 
-                Commodity commodity = new Commodity();
-                commodity.setCommodityId(tbkCoupon.getNumIid());
-                commodity.setPicture(tbkCoupon.getPictUrl());
-                commodity.setTitle(tbkCoupon.getTitle());
-                commodity.setPrice(tbkCoupon.getZkFinalPrice());
-                commodity.setCategory(category);
-                commodity.setUpdateTime(new Date());
-                commodityService.update(commodity);
+                CommodityEntity commodityEntity = new CommodityEntity();
+                commodityEntity.setCommodityId(tbkCoupon.getNumIid());
+                commodityEntity.setPicture(tbkCoupon.getPictUrl());
+                commodityEntity.setTitle(tbkCoupon.getTitle());
+                commodityEntity.setPrice(tbkCoupon.getZkFinalPrice());
+                commodityEntity.setCategory(category);
+                commodityEntity.setUpdateTime(new Date());
+                commodityService.update(commodityEntity);
             }
 
             String log = "请求（" + category +"）商品成功\r\n";

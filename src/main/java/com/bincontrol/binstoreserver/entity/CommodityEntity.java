@@ -6,31 +6,49 @@ import java.util.Date;
 
 @Entity
 @Table(name = "tb_commodity")
-public class Commodity {
+public class CommodityEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    /**
+     * 商品ID
+     */
     @NotNull
     @Column(name = "commodity_id")
     private Long commodityId;
 
+    /**
+     * 商品图片链接
+     */
     @NotNull
     @Column(name = "picture")
     private String picture;
 
+    /**
+     * 商品标题
+     */
     @NotNull
     @Column(name = "title")
     private String title;
 
+    /**
+     * 商品价格
+     */
     @NotNull
     @Column(name = "price")
     private String price;
 
+    /**
+     * 商品类别
+     */
     @Column(name = "category")
     private String category;
 
+    /**
+     * 商品数据更新时间
+     */
     @Column(name = "update_time")
     private Date updateTime;
 

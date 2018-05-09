@@ -1,20 +1,11 @@
 package com.bincontrol.binstoreserver.controller;
 
-import com.bincontrol.binstoreserver.entity.Commodity;
+import com.bincontrol.binstoreserver.entity.CommodityEntity;
 import com.bincontrol.binstoreserver.service.CommodityService;
-import com.taobao.api.ApiException;
-import com.taobao.api.DefaultTaobaoClient;
-import com.taobao.api.TaobaoClient;
-import com.taobao.api.request.TbkDgItemCouponGetRequest;
-import com.taobao.api.response.TbkDgItemCouponGetResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
-
-import static com.bincontrol.binstoreserver.common.ServerConstant.*;
 
 @RestController
 @RequestMapping(path = "/commodity")
@@ -26,9 +17,9 @@ public class CommodityController {
     @GetMapping(path = "/category")
     public String getCommodityByCategory(String category) {
 
-        Iterable<Commodity> commodities = commodityService.getAll();
-        for (Commodity commodity : commodities) {
-            System.out.print(commodity.getCommodityId());
+        Iterable<CommodityEntity> commodities = commodityService.getAll();
+        for (CommodityEntity commodityEntity : commodities) {
+            System.out.print(commodityEntity.getCommodityId());
         }
 
         return "Finish";
