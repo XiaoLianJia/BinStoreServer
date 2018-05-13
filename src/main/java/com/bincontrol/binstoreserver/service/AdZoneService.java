@@ -64,4 +64,13 @@ public class AdZoneService {
         }
     }
 
+
+    /**
+     * 查询所有推广位
+     * @return 所有推广位
+     */
+    public Iterable<AdZoneEntity> getAll() {
+        return adZoneRepository.findAll();
+    }
+
 }

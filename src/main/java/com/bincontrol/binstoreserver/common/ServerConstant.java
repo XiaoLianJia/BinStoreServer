@@ -11,6 +11,13 @@ public class ServerConstant {
     public static long ALI_SERVER_ADZONE_ID = 453770120L;
     public static String ALI_SERVER_PID = "mm_128206999_44364607_453770120";
 
+    // 请求参数
+    public static String REQUEST_PARAM_ACCOUNT = "account";
+    public static String REQUEST_PARAM_PASSWORD = "password";
+    public static String REQUEST_PARAM_ADZONENAME = "adzonename";
+    public static String REQUEST_PARAM_ADZONEID = "adzoneid";
+    public static String REQUEST_PARAM_INVITECODE = "invitecode";
+
     // 商品类别
     public static ArrayList<String> COMMODITY_CATEGORY = new ArrayList<String>() {
         {
