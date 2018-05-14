@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.lang.reflect.Method;
 import java.util.logging.Logger;
 
 import static com.bincontrol.binstoreserver.common.ServerConstant.REQUEST_PARAM_ACCOUNT;
@@ -110,7 +109,7 @@ public class UserController {
                 json.put("msg", ServerErrorCode.BIN_ERR_PARAM_INVALID_INVITECODE.getMsg());
 
             } else {
-                Long adZoneId = 1234567L;//adZoneService.getFreeAdZoneId(account, true);
+                Long adZoneId = adZoneService.getFreeAdZoneId(account, true);
                 if (adZoneId == null) {
                     logger.severe("错误：无空闲推广位");
                     json.put("status", ServerErrorCode.BIN_ERR_NO_FREE_ADZONE.getCode());

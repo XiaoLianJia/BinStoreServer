@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 @Transactional
@@ -54,14 +55,15 @@ public class AdZoneService {
      * @return 返回空闲推广位编号
      */
     public Long getFreeAdZoneId(String owner, boolean setOccupied) {
-        AdZoneEntity adZoneEntity = adZoneRepository.findByOccupiedFalse();
-        if (adZoneEntity != null) {
-            adZoneEntity.setOccupied(setOccupied);
-            adZoneEntity.setOwner(owner);
-            return adZoneEntity.getAdzoneId();
-        } else {
-            return null;
+        Iterable<AdZoneEntity> adZoneEntities = adZoneRepository.findByOccupied(false);
+        for (AdZoneEntity adZoneEntity : adZoneEntities) {
+            if (adZoneEntity != null) {
+                adZoneEntity.setOccupied(setOccupied);
+                adZoneEntity.setOwner(owner);
+                return adZoneEntity.getAdzoneId();
+            }
         }
+        return null;
     }
 
 

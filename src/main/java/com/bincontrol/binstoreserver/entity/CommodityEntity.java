@@ -41,6 +41,12 @@ public class CommodityEntity {
     private String price;
 
     /**
+     * 月销量
+     */
+    @Column(name = "volume")
+    private String volume;
+
+    /**
      * 商品类别
      */
     @Column(name = "category")
@@ -91,6 +97,14 @@ public class CommodityEntity {
 
     public void setPrice(String price) {
         this.price = price;
+    }
+
+    public String getVolume() {
+        return volume;
+    }
+
+    public void setVolume(String volume) {
+        this.volume = volume;
     }
 
     public String getCategory() {

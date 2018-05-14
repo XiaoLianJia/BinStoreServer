@@ -32,6 +32,6 @@ public interface AdZoneRepository extends CrudRepository<AdZoneEntity, Long> {
      * 查找尚未被占用的推广位
      * @return 空闲推广位实体
      */
-    AdZoneEntity findByOccupiedFalse();
+    Iterable<AdZoneEntity> findByOccupied(boolean isOccupied);
 
 }

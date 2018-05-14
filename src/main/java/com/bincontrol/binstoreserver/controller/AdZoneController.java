@@ -1,5 +1,6 @@
 package com.bincontrol.binstoreserver.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.bincontrol.binstoreserver.common.ServerErrorCode;
@@ -11,8 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.logging.Logger;
+
+import static com.bincontrol.binstoreserver.common.ServerConstant.*;
 
 @RestController
 @RequestMapping(path = "/adzone")
@@ -30,13 +35,32 @@ public class AdZoneController {
      * @param response Http响应
      */
     @RequestMapping(value = "/add")
-    public void add(HttpServletRequest request, HttpServletResponse response) {
+    public void add(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         logger.info("请求：" + request.getRequestURL().toString());
         logger.info("参数：" + request.getQueryString());
 
-        String adZoneName = request.getParameter("name");
-        String adZoneId = request.getParameter("id");
+        String adZoneName = null;
+        String adZoneId = null;
+
+        if (request.getMethod().equals("POST")) {
+            InputStreamReader inputStreamReader = new InputStreamReader(request.getInputStream());
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+            String line;
+            StringBuilder stringBuilder = new StringBuilder();
+            while ((line = bufferedReader.readLine()) != null) {
+                stringBuilder.append(line);
+            }
+            String result = stringBuilder.toString();
+            JSONObject jsonObject = JSON.parseObject(result);
+
+            adZoneName = jsonObject.getString(REQUEST_PARAM_ADZONENAME);
+            adZoneId = jsonObject.getString(REQUEST_PARAM_ADZONEID);
+
+        } else if (request.getQueryString() != null) {
+            adZoneName = request.getParameter(REQUEST_PARAM_ACCOUNT);
+            adZoneId = request.getParameter(REQUEST_PARAM_PASSWORD);
+        }
 
         response.setContentType("application/json; charset=utf-8");
         response.setCharacterEncoding("UTF-8");

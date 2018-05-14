@@ -60,6 +60,7 @@ public class CommodityRequestService {
                 commodityEntity.setPicture(tbkCoupon.getPictUrl());
                 commodityEntity.setTitle(tbkCoupon.getTitle());
                 commodityEntity.setPrice(tbkCoupon.getZkFinalPrice());
+                commodityEntity.setVolume(tbkCoupon.getVolume().toString());
                 commodityEntity.setCategory(category);
                 commodityEntity.setUpdateTime(new Date());
                 commodityService.update(commodityEntity);

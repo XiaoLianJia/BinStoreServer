@@ -17,6 +17,7 @@ public class ServerConstant {
     public static String REQUEST_PARAM_ADZONENAME = "adzonename";
     public static String REQUEST_PARAM_ADZONEID = "adzoneid";
     public static String REQUEST_PARAM_INVITECODE = "invitecode";
+    public static String REQUEST_PARAM_CATEGORY = "category";
 
     // 商品类别
     public static ArrayList<String> COMMODITY_CATEGORY = new ArrayList<String>() {
@@ -24,12 +25,13 @@ public class ServerConstant {
             add("女装");
             add("母婴");
             add("美妆");
-            add("家居");
+            add("鞋包");
             add("内衣");
             add("男装");
             add("美食");
             add("数码");
-            add("鞋包");
+            add("家居");
+            add("配饰");
         }
     };
 
